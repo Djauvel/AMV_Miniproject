@@ -1,8 +1,3 @@
-# AMV_Miniproject
-This repository contains a mini-project from the applied machine vision course.
-
-
-Developed with Dependencies:
 JetPack 4.6.0
 OpenCV 4.5.3
 TensorFLow 2.4.1
@@ -13,3 +8,4 @@ LibTorch 1.8.1
 ncnn 20210720
 MNN 1.2.1
 JTOP 3.1.1
+TeamViewer aarch64 15.24.5
