@@ -17,10 +17,10 @@ def capture_images(num_images, save_dir):
             image_path = os.path.join(save_dir, f"image_{i+1}.jpg")
             cv.imwrite(image_path, frame)
             print(f"Image {i+1} saved at {image_path}")
-            time.sleep(1)
+            time.sleep(2)
         else:
             print(f"Error: Could not capture image {i+1}")
-            time.sleep(1)
+            time.sleep(2)
 
     cap.release()
     cv.destroyAllWindows()
