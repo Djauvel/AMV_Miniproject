@@ -15,20 +15,49 @@ image_count = len(list(DataPath.glob("*.jpg"))) + len(list(DataPath.glob("*.png"
 print(f"Number of images: {image_count}")
 
 image = cv2.imread('dataset/MachineScrew/image_193.jpg')
+#image = cv2.imread('dataset/frenchScrew/image_33jpg.jpg')
 
+#im = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-im = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#load the image in grayscale
+im = cv2.imread('dataset/MachineScrew/image_193.jpg', cv2.IMREAD_GRAYSCALE)
+
+#im = cv2.imread('dataset/frenchScrew/image_33jpg.jpg', cv2.IMREAD_GRAYSCALE)
 
 
 blurred = cv2.GaussianBlur(im, (5, 5), 0)
 
+## different methods of edge detection
+
 
 # Perform Canny edge detection
-edges = cv2.Canny(blurred, 100, 200)
+#edges = cv2.Canny(blurred, 100, 200)
+
+
+# Apply binary thresholding
+#_, thresh = cv2.threshold(im, 100, 255, cv2.THRESH_BINARY_INV)
+
+
+# Apply Adaptive Thresholding
+thresh = cv2.adaptiveThreshold(im, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+                               cv2.THRESH_BINARY_INV, 135, 8)
+
+
+
+
+
+#show the thresholded image
+plt.imshow(thresh, cmap='gray')
+plt.title('Thresholded Image')
+plt.show()
 
 
 # Find contours in the image
-contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+#contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+# Find contours
+contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
 
 # Draw the contours on the original image
 contoured_image = image.copy()
@@ -39,68 +68,29 @@ plt.imshow(cv2.cvtColor(contoured_image, cv2.COLOR_BGR2RGB))
 plt.title('Contours')
 plt.show()
 
-# Get the bounding box of the largest contour (assumed to be the screw)
+
+
+
+# Get the largest contour (which should be the screw)
 largest_contour = max(contours, key=cv2.contourArea)
-x, y, w, h = cv2.boundingRect(largest_contour)
-print(f"Length (height): {h}, Width: {w}")
 
+# Get the rotated bounding box (angle of rotation)
+rect = cv2.minAreaRect(largest_contour)
+angle = rect[2]
 
+#dimensions of the bounding box
+width, height = rect[1]
+print(f"Width: {width}, Height: {height}")
+#aspect ratio of the bounding box as the longest side divided by the shortest side
+aspect_ratio = max(width, height) / min(width, height)
+print(f"Aspect Ratio: {aspect_ratio}")
 
+#show the bounding box on the image
+box = cv2.boxPoints(rect)
+box = np.int0(box)
 
-
-
-
-
-
-
-
-
-
-
-
-# Setup SimpleBlobDetector parameters.
-params = cv2.SimpleBlobDetector_Params()
- 
-# Change thresholds
-params.minThreshold = 10;
-params.maxThreshold = 200;
- 
-# Filter by Area.
-params.filterByArea = True
-params.minArea = 500
- 
-# Filter by Circularity
-params.filterByCircularity = False
-params.minCircularity = 0.1
- 
-# Filter by Convexity
-params.filterByConvexity = False
-params.minConvexity = 0.87
- 
-# Filter by Inertia
-params.filterByInertia = False
-params.minInertiaRatio = 0.01
- 
-# Create a detector with the parameters
-ver = (cv2.__version__).split('.')
-if int(ver[0]) < 3 :
- detector = cv2.SimpleBlobDetector(params)
-else : 
- detector = cv2.SimpleBlobDetector_create(params)
-
-
-
-# Detect blobs.
-keypoints = detector.detect(im)
- 
-# Draw detected blobs as red circles.
-# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
- 
-# Show keypoints
-#cv2.imshow("Keypoints", im_with_keypoints)
-#cv2.waitKey(0)
-
-#cv2.imshow("Greyscale Image", im)
-#v2.waitKey(0)
-#cv2.destroyAllWindows()
+bounding_box_image = image.copy()
+cv2.drawContours(bounding_box_image, [box], 0, (0, 255, 0), 2)
+plt.imshow(cv2.cvtColor(bounding_box_image, cv2.COLOR_BGR2RGB))
+plt.title('Rotated Bounding Box')
+plt.show()
