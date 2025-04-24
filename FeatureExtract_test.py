@@ -14,15 +14,15 @@ image_count = len(list(DataPath.glob("*.jpg"))) + len(list(DataPath.glob("*.png"
 
 print(f"Number of images: {image_count}")
 
-image = cv2.imread('dataset/MachineScrew/image_193.jpg')
-#image = cv2.imread('dataset/frenchScrew/image_33jpg.jpg')
+#image = cv2.imread('dataset/MachineScrew/image_193.jpg')
+image = cv2.imread('examroomdataset/FrenchScrew/imag_1.jpg')
 
 #im = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 #load the image in grayscale
-im = cv2.imread('dataset/MachineScrew/image_193.jpg', cv2.IMREAD_GRAYSCALE)
+#im = cv2.imread('dataset/MachineScrew/image_193.jpg', cv2.IMREAD_GRAYSCALE)
 
-#im = cv2.imread('dataset/frenchScrew/image_33jpg.jpg', cv2.IMREAD_GRAYSCALE)
+im = cv2.imread('examroomdataset/FrenchScrew/imag_1.jpg', cv2.IMREAD_GRAYSCALE)
 
 
 blurred = cv2.GaussianBlur(im, (5, 5), 0)
@@ -31,7 +31,7 @@ blurred = cv2.GaussianBlur(im, (5, 5), 0)
 
 
 # Perform Canny edge detection
-#edges = cv2.Canny(blurred, 100, 200)
+edges = cv2.Canny(blurred, 100, 200)
 
 
 # Apply binary thresholding
@@ -39,15 +39,15 @@ blurred = cv2.GaussianBlur(im, (5, 5), 0)
 
 
 # Apply Adaptive Thresholding
-thresh = cv2.adaptiveThreshold(im, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-                               cv2.THRESH_BINARY_INV, 135, 8)
+#thresh = cv2.adaptiveThreshold(im, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+#                               cv2.THRESH_BINARY_INV, 135, 8)
 
 
 
 
 
 #show the thresholded image
-plt.imshow(thresh, cmap='gray')
+plt.imshow(edges, cmap='gray')
 plt.title('Thresholded Image')
 plt.show()
 
@@ -56,7 +56,7 @@ plt.show()
 #contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 # Find contours
-contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 
 # Draw the contours on the original image
