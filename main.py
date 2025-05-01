@@ -12,7 +12,7 @@ import random
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load dataset to get class labels
-dataset = ScrewDataset("examroomdataset")
+dataset = ScrewDataset("dataset")
 num_classes = len(dataset.classes)
 class_names = dataset.classes
 
