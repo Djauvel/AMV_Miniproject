@@ -190,4 +190,4 @@ if __name__ == "__main__":
     final_model = create_model(num_classes=len(dataset.classes))
     final_model = train(final_model, full_loader, val_loader=None, device=device, epochs=10, lr=best_lr)
     torch.save(final_model.state_dict(), "screw_classifier_resnet_Final.pth")
-    print("Final model trained on full dataset and saved as 'screw_classifier_resnet_Final.pth'")
+    print("Final model trained on full dataset and saved as 'screw_classifier_resnet_Final_new.pth'")

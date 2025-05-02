@@ -14,7 +14,7 @@ def capture_images(num_images, save_dir):
     for i in range(num_images):
         ret, frame = cap.read()
         if ret:
-            image_path = os.path.join(save_dir, f"image_{i+1}.jpg")
+            image_path = os.path.join(save_dir, f"image_{i+16}.jpg")
             cv.imwrite(image_path, frame)
             print(f"Image {i+1} saved at {image_path}")
             time.sleep(2)
@@ -26,10 +26,8 @@ def capture_images(num_images, save_dir):
     cv.destroyAllWindows()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Capture images from a USB webcam.")
-    parser.add_argument("num_images", type=int, help="Number of images to capture")
-    parser.add_argument("--save_dir", type=str, default="captured_images", help="Directory to save the images")
     
-    args = parser.parse_args()
-    
-    capture_images(args.num_images, args.save_dir)
+    num_images = 15
+    save_dir = "captured_images"
+    print(f"Capturing {num_images} images and saving to {save_dir}...")
+    capture_images(num_images, save_dir)
