@@ -59,7 +59,7 @@ def create_model(num_classes):
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     return model
 
-# --- Train Function (with optional validation) ---
+# --- Train Function ---
 def train(model, train_loader, val_loader, device, epochs=10, lr=0.001):
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = nn.CrossEntropyLoss()
