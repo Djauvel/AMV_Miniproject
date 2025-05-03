@@ -1,33 +1,38 @@
-import cv2 as cv
+import cv2
 import os
-import argparse
-import time
 
-def capture_images(num_images, save_dir):
-    os.makedirs(save_dir, exist_ok=True)
+# Folder to save images
+save_dir = "screw_capture"
+os.makedirs(save_dir, exist_ok=True)
 
-    cap = cv.VideoCapture(0)
-    if not cap.isOpened():
-        print("Error: Could not open webcam")
-        return
+# Automatically count existing images
+existing_images = [f for f in os.listdir(save_dir) if f.endswith(('.jpg', '.png', '.jpeg'))]
+img_counter = len(existing_images)
 
-    for i in range(num_images):
-        ret, frame = cap.read()
-        if ret:
-            image_path = os.path.join(save_dir, f"image_{i+16}.jpg")
-            cv.imwrite(image_path, frame)
-            print(f"Image {i+1} saved at {image_path}")
-            time.sleep(2)
-        else:
-            print(f"Error: Could not capture image {i+1}")
-            time.sleep(2)
+# Open webcam
+cam = cv2.VideoCapture(0)
+cv2.namedWindow("Screw Collector")
 
-    cap.release()
-    cv.destroyAllWindows()
+print("Press 'c' to capture an image. Press 'q' to quit.")
 
-if __name__ == "__main__":
-    
-    num_images = 15
-    save_dir = "captured_images"
-    print(f"Capturing {num_images} images and saving to {save_dir}...")
-    capture_images(num_images, save_dir)
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        print("Failed to grab frame.")
+        break
+
+    cv2.imshow("Screw Collector", frame)
+    key = cv2.waitKey(1)
+
+    if key == ord('c'):
+        img_name = os.path.join(save_dir, f"screw_{img_counter:04d}.jpg")
+        cv2.imwrite(img_name, frame)
+        img_counter += 1
+        print(f"Captured {img_name} — Total images: {img_counter}")
+
+    elif key == ord('q'):
+        print("Exiting.")
+        break
+
+cam.release()
+cv2.destroyAllWindows()

@@ -1,0 +1,31 @@
+# 25/25 iterations complete ✅ (4257.63s)
+# Results saved to yolo_screw_detector_tuned\bayes_opt
+# Best fitness=0.73981 observed at iteration 3
+# Best fitness metrics are {'metrics/precision(B)': 0.92351, 'metrics/recall(B)': 0.92488, 'metrics/mAP50(B)': 0.97027, 'metrics/mAP50-95(B)': 0.71421, 'val/box_loss': 1.09138, 'val/cls_loss': 0.65192, 'val/dfl_loss': 0.98256, 'fitness': 0.73981}
+# Best fitness model is yolo_screw_detector_tuned\train3
+# Best fitness hyperparameters are printed below.
+
+lr0: 0.00968
+lrf: 0.00852
+momentum: 0.92295
+weight_decay: 0.00048
+warmup_epochs: 2.95379
+warmup_momentum: 0.87169
+box: 8.4315
+cls: 0.49723
+dfl: 1.5427
+hsv_h: 0.01705
+hsv_s: 0.7255
+hsv_v: 0.35868
+degrees: 0.0
+translate: 0.1
+scale: 0.5
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.56478
+bgr: 0.0
+mosaic: 1.0
+mixup: 0.0
+cutmix: 0.0
+copy_paste: 0.0
