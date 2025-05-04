@@ -8,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 import os
 
 # --- Load label classes ---
-def get_classes_from_dataset(dataset_path="dataset"):
+def get_classes_from_dataset(dataset_path="datasets/Olddataset"):
     label_names = [d for d in os.listdir(dataset_path) if os.path.isdir(os.path.join(dataset_path, d))]
     le = LabelEncoder()
     le.fit(label_names)
