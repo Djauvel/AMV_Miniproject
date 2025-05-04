@@ -6,3 +6,8 @@ scikit-learn>=1.0.0
 optuna>=3.0.0
 tqdm>=4.60.0
 matplotlib>=3.4.0
+ultralytics==8.1.18        
+flask                      
+opencv-python               
+numpy                       
+PyYAML                     
