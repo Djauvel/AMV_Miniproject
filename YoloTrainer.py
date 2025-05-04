@@ -10,7 +10,7 @@ EPOCHS = 100
 BATCH_SIZE = 16
 PROJECT_NAME = "screw_detector_retrain"
 EXPERIMENT_NAME = "from_best_hyp"
-BEST_HYP_PATH = "yolo_screw_detector_tuned/bayes_opt/best_hyperparameters.yaml"  # Update this path as needed
+BEST_HYP_PATH = "yolo_screw_detector_tuned/bayes_opt/best_hyperparameters.yaml"
 
 # --- TRAINING ---
 def retrain_with_best_hyperparams():
